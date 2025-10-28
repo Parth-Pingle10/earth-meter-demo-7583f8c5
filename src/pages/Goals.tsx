@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { mockGoals } from "@/lib/mockData";
-import { Target, Plus, TrendingUp } from "lucide-react";
+import { Target, Plus, TrendingUp, History } from "lucide-react";
 import { toast } from "sonner";
 
 const Goals = () => {
@@ -15,6 +16,14 @@ const Goals = () => {
   const [newGoalName, setNewGoalName] = useState("");
   const [newGoalTarget, setNewGoalTarget] = useState("");
   const [open, setOpen] = useState(false);
+  const [activities, setActivities] = useState<any[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("ecotrack-activities");
+    if (stored) {
+      setActivities(JSON.parse(stored));
+    }
+  }, []);
 
   const handleCreateGoal = () => {
     if (!newGoalName || !newGoalTarget) {
@@ -122,6 +131,64 @@ const Goals = () => {
             );
           })}
         </div>
+
+        <Card className="shadow-eco mt-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <History className="h-5 w-5 text-primary" />
+              Activity History
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {activities.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">
+                No activities logged yet. Start tracking to see your history!
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Activity Type</TableHead>
+                      <TableHead>Details</TableHead>
+                      <TableHead className="text-right">Emission (kg CO₂)</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {activities.map((activity) => (
+                      <TableRow key={activity.id}>
+                        <TableCell className="font-medium">{activity.date}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">
+                              {activity.type === "Car Travel" && "🚗"}
+                              {activity.type === "Electricity Usage" && "⚡"}
+                              {activity.type === "Food Consumption" && "🍔"}
+                              {activity.type === "Flight Travel" && "✈️"}
+                              {activity.type === "Bike/Walk" && "🚲"}
+                            </span>
+                            <span>{activity.type}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {activity.type === "Car Travel" && `${activity.distance} km, ${activity.mileage} km/l, ${activity.fuel}`}
+                          {activity.type === "Electricity Usage" && `${activity.units} kWh`}
+                          {activity.type === "Food Consumption" && activity.dietType}
+                          {activity.type === "Flight Travel" && `${activity.distance} km`}
+                          {activity.type === "Bike/Walk" && "Eco-friendly transport"}
+                        </TableCell>
+                        <TableCell className="text-right font-bold text-primary">
+                          {activity.emission.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
