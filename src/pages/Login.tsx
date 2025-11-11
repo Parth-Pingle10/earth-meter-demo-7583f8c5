@@ -55,7 +55,7 @@ const Login = () => {
             <h1 className="text-4xl font-bold">EcoTrack</h1>
           </div>
           <p className="text-muted-foreground">
-            Track your carbon footprint, save the planet 🌍
+            Track your carbon footprint, save the planet 
           </p>
         </div>
 
