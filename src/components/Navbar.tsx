@@ -1,13 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { LogOut, Leaf } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { toast } from "sonner";
 import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const navLinks = [
     { path: "/dashboard", label: "Dashboard" },
     { path: "/activity", label: "Activities" },
@@ -15,7 +15,7 @@ const Navbar = () => {
     { path: "/history", label: "History" },
     { path: "/recommendations", label: "Recommendations" },
     { path: "/rewards", label: "Rewards" },
-    { path: "/chatbot", label: "Chatbot" }
+    { path: "/chatbot", label: "Chatbot" },
   ];
 
   const handleLogout = () => {
@@ -24,13 +24,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-transparent backdrop-blur-md supports-[backdrop-filter]:bg-background/70 transition-colors duration-300">
       <div className="container flex h-16 items-center justify-between">
+        
+        {/* 🌿 Logo Section */}
         <Link to="/dashboard" className="flex items-center gap-2 font-bold text-xl">
-          <Leaf className="h-6 w-6 text-primary" />
+          <img
+            src="/logo.ico"
+            alt="EcoTrack Logo"
+            className="h-8 w-8 rounded-full shadow-sm"
+          />
           <span className="text-foreground">EcoTrack</span>
         </Link>
 
+        {/* 🧭 Navigation Links */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path}>
@@ -45,6 +52,7 @@ const Navbar = () => {
           ))}
         </div>
 
+        {/* 🌗 Theme Toggle + Logout */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Button
