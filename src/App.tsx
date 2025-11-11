@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Activity from "./pages/Activity";
 import Goals from "./pages/Goals";
+import History from "./pages/History";
 import Recommendations from "./pages/Recommendations";
 import Rewards from "./pages/Rewards";
 import Chatbot from "./pages/Chatbot";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/goals" element={<Goals />} />
+          <Route path="/history" element={<History />} />
           <Route path="/recommendations" element={<Recommendations />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/chatbot" element={<Chatbot />} />

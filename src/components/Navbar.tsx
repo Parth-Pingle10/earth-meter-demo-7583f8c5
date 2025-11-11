@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { LogOut, Leaf } from "lucide-react";
 import { toast } from "sonner";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const Navbar = () => {
     { path: "/dashboard", label: "Dashboard" },
     { path: "/activity", label: "Activities" },
     { path: "/goals", label: "Goals" },
+    { path: "/history", label: "History" },
     { path: "/recommendations", label: "Recommendations" },
     { path: "/rewards", label: "Rewards" },
     { path: "/chatbot", label: "Chatbot" }
@@ -43,15 +45,18 @@ const Navbar = () => {
           ))}
         </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleLogout}
-          className="gap-2"
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLogout}
+            className="gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        </div>
       </div>
     </nav>
   );

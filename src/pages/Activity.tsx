@@ -89,6 +89,7 @@ const Activity = () => {
       type: currentActivityType,
       emission: calculatedEmission,
       date: new Date().toISOString().split('T')[0],
+      timestamp: new Date().toISOString(),
       ...(selectedActivity === "car" && { distance, mileage, fuel: fuelType }),
       ...(selectedActivity === "electricity" && { units: electricity }),
       ...(selectedActivity === "food" && { dietType }),
