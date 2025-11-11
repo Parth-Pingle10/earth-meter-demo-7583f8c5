@@ -21,7 +21,7 @@ const Dashboard = () => {
   const totalEmissions = activities.reduce((sum, activity) => sum + (activity.emission || 0), 0);
 
   return (
-    <div className="min-h-screen bg-background select-none">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container py-8 animate-fade-in">
         <div className="mb-8">
@@ -82,6 +82,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
+                <span className="text-2xl">🚶</span>
                 <div>
                   <p className="font-medium">Try walking for short distances</p>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -110,6 +111,13 @@ const Dashboard = () => {
                     className="flex items-center justify-between p-4 bg-muted rounded-lg transition-smooth"
                   >
                     <div className="flex items-center gap-3">
+                      <span className="text-2xl">
+                        {activity.type === "Car Travel" && ""}
+                        {activity.type === "Electricity Usage" && ""}
+                        {activity.type === "Food Consumption" && ""}
+                        {activity.type === "Flight Travel" && ""}
+                        {activity.type === "Bike/Walk" && ""}
+                      </span>
                       <div>
                         <p className="font-medium">{activity.type}</p>
                         <p className="text-sm text-muted-foreground">{activity.date}</p>

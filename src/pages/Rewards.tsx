@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { mockRewards } from "@/lib/mockData";
-import { Trophy, Lock, Award } from "lucide-react";
+import { Trophy, Lock } from "lucide-react";
 
 const Rewards = () => {
   return (
@@ -16,24 +16,22 @@ const Rewards = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           {mockRewards.map((reward, index) => (
-            <Card
-              key={reward.id}
+            <Card 
+              key={reward.id} 
               className={`transition-smooth animate-fade-in ${
-                reward.unlocked ? "bg-card" : "bg-muted/50"
+                reward.unlocked ? 'bg-card' : 'bg-muted/50'
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Award
-                      className={`h-6 w-6 ${
-                        !reward.unlocked && "grayscale opacity-50"
-                      }`}
-                    />
+                    <span className={`text-4xl ${!reward.unlocked && 'grayscale opacity-50'}`}>
+                      {reward.name.split(' ')[0]}
+                    </span>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium">{reward.name}</span>
+                        {reward.name.split(' ').slice(1).join(' ')}
                         {reward.unlocked ? (
                           <Badge className="eco-gradient">Unlocked</Badge>
                         ) : (
@@ -48,13 +46,7 @@ const Rewards = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p
-                  className={`text-sm ${
-                    reward.unlocked
-                      ? "text-foreground"
-                      : "text-muted-foreground"
-                  }`}
-                >
+                <p className={`text-sm ${reward.unlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
                   {reward.description}
                 </p>
               </CardContent>
