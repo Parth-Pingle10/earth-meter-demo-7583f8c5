@@ -82,7 +82,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
-                <span className="text-2xl">🚶</span>
+                <span className="text-2xl"></span>
                 <div>
                   <p className="font-medium">Try walking for short distances</p>
                   <p className="text-sm text-muted-foreground mt-1">

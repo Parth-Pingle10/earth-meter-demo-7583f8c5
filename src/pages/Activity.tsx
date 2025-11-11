@@ -20,6 +20,11 @@ const Activity = () => {
   const [calculatedEmission, setCalculatedEmission] = useState<number | null>(null);
   const [currentActivityType, setCurrentActivityType] = useState("");
 
+  const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>, setter: (value: string) => void) => {
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) setter(value);
+  };
+
   const calculateEmission = () => {
     if (!selectedActivity) {
       toast.error("Please select an activity type");
@@ -32,41 +37,31 @@ const Activity = () => {
     if (selectedActivity === "car") {
       const dist = parseFloat(distance);
       const mil = parseFloat(mileage);
-      
-      if (!dist || !mil) {
-        toast.error("Please enter distance and mileage");
+      if (!dist || !mil || dist <= 0 || mil <= 0) {
+        toast.error("Please enter valid positive distance and mileage");
         return;
       }
-
       const factor = fuelType === "petrol" ? emissionFactors.petrol : emissionFactors.diesel;
       emission = (dist / mil) * factor;
       activityType = "Car Travel";
     } else if (selectedActivity === "electricity") {
       const kWh = parseFloat(electricity);
-      
-      if (!kWh) {
-        toast.error("Please enter electricity consumed");
+      if (!kWh || kWh <= 0) {
+        toast.error("Please enter valid electricity consumption");
         return;
       }
-
       emission = kWh * emissionFactors.electricity;
       activityType = "Electricity Usage";
     } else if (selectedActivity === "food") {
-      const dietEmissions = {
-        vegetarian: 3.8,
-        mixed: 5.6,
-        nonVegetarian: 7.2
-      };
+      const dietEmissions = { vegetarian: 3.8, mixed: 5.6, nonVegetarian: 7.2 };
       emission = dietEmissions[dietType as keyof typeof dietEmissions];
       activityType = "Food Consumption";
     } else if (selectedActivity === "flight") {
       const dist = parseFloat(flightDistance);
-      
-      if (!dist) {
-        toast.error("Please enter flight distance");
+      if (!dist || dist <= 0) {
+        toast.error("Please enter valid flight distance");
         return;
       }
-
       emission = dist * emissionFactors.flight;
       activityType = "Flight Travel";
     } else if (selectedActivity === "bike") {
@@ -88,7 +83,7 @@ const Activity = () => {
       id: Date.now(),
       type: currentActivityType,
       emission: calculatedEmission,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       timestamp: new Date().toISOString(),
       ...(selectedActivity === "car" && { distance, mileage, fuel: fuelType }),
       ...(selectedActivity === "electricity" && { units: electricity }),
@@ -98,10 +93,9 @@ const Activity = () => {
 
     activities.push(newActivity);
     localStorage.setItem("ecotrack-activities", JSON.stringify(activities));
-    
+
     toast.success("Activity added to dashboard!");
-    
-    // Reset form
+
     setSelectedActivity("");
     setDistance("");
     setMileage("");
@@ -113,7 +107,7 @@ const Activity = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container py-8 animate-fade-in max-w-2xl">
+      <main className="container py-8 animate-fade-in max-w-2xl select-none">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Log Your Activity</h1>
           <p className="text-muted-foreground">Track your carbon emissions from daily activities</p>
@@ -150,24 +144,28 @@ const Activity = () => {
                     <Label htmlFor="distance">Distance (km)</Label>
                     <Input
                       id="distance"
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="e.g., 20"
                       value={distance}
-                      onChange={(e) => setDistance(e.target.value)}
+                      onChange={(e) => handleNumberInput(e, setDistance)}
+                      className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="mileage">Mileage (km/l)</Label>
                     <Input
                       id="mileage"
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="e.g., 15"
                       value={mileage}
-                      onChange={(e) => setMileage(e.target.value)}
+                      onChange={(e) => handleNumberInput(e, setMileage)}
+                      className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label>Fuel Type</Label>
                   <Select value={fuelType} onValueChange={setFuelType}>
@@ -189,10 +187,12 @@ const Activity = () => {
                   <Label htmlFor="electricity">Electricity Consumed (kWh)</Label>
                   <Input
                     id="electricity"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     placeholder="e.g., 50"
                     value={electricity}
-                    onChange={(e) => setElectricity(e.target.value)}
+                    onChange={(e) => handleNumberInput(e, setElectricity)}
+                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -222,10 +222,12 @@ const Activity = () => {
                   <Label htmlFor="flightDistance">Flight Distance (km)</Label>
                   <Input
                     id="flightDistance"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     placeholder="e.g., 1500"
                     value={flightDistance}
-                    onChange={(e) => setFlightDistance(e.target.value)}
+                    onChange={(e) => handleNumberInput(e, setFlightDistance)}
+                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -234,16 +236,12 @@ const Activity = () => {
             {selectedActivity === "bike" && (
               <div className="p-4 bg-success/10 rounded-lg text-center animate-fade-in">
                 <p className="text-success font-medium">
-                  🎉 Excellent choice! Walking and cycling produce zero emissions.
+                  Excellent choice! Walking and cycling produce zero emissions.
                 </p>
               </div>
             )}
 
-            <Button 
-              onClick={calculateEmission} 
-              className="w-full eco-gradient"
-              size="lg"
-            >
+            <Button onClick={calculateEmission} className="w-full eco-gradient" size="lg">
               <Calculator className="h-5 w-5 mr-2" />
               Calculate Emission
             </Button>
@@ -260,7 +258,7 @@ const Activity = () => {
                   {calculatedEmission.toFixed(2)}
                 </div>
                 <p className="text-white/90 mb-4">kg CO₂e</p>
-                <Button 
+                <Button
                   onClick={addToDashboard}
                   className="bg-white text-primary hover:bg-white/90"
                   size="lg"
