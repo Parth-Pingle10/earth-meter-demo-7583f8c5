@@ -18,7 +18,7 @@ const Rewards = () => {
           {mockRewards.map((reward, index) => (
             <Card 
               key={reward.id} 
-              className={`shadow-eco transition-smooth hover:scale-105 animate-fade-in ${
+              className={`shadow-eco transition-smooth animate-fade-in ${
                 reward.unlocked ? 'bg-card' : 'bg-muted/50'
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}

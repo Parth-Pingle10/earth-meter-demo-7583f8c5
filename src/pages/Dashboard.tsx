@@ -53,7 +53,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 mb-8">
-          <Card className="shadow-eco transition-smooth hover:scale-[1.02]">
+          <Card className="shadow-eco transition-smooth">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Plus className="h-5 w-5 text-primary" />
@@ -76,7 +76,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-eco transition-smooth hover:scale-[1.02]">
+          <Card className="shadow-eco transition-smooth">
             <CardHeader>
               <CardTitle>Latest Recommendation</CardTitle>
             </CardHeader>
@@ -108,7 +108,7 @@ const Dashboard = () => {
                 {activities.slice(-5).reverse().map((activity) => (
                   <div
                     key={activity.id}
-                    className="flex items-center justify-between p-4 bg-muted rounded-lg hover:bg-muted/80 transition-smooth"
+                    className="flex items-center justify-between p-4 bg-muted rounded-lg transition-smooth"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">

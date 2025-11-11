@@ -100,7 +100,7 @@ const Goals = () => {
             const progressPercent = (goal.progress / goal.targetValue) * 100;
             
             return (
-              <Card key={goal.id} className="shadow-eco hover:shadow-eco-lg transition-smooth">
+              <Card key={goal.id} className="shadow-eco transition-smooth">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
