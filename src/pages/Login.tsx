@@ -3,13 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Leaf } from "lucide-react";
 import { toast } from "sonner";
@@ -45,36 +39,29 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-background text-foreground transition-colors duration-300">
+    <div className="min-h-screen eco-gradient-soft flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-scale-in">
-        {/* Logo + Title */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Leaf className="h-12 w-12 text-primary animate-glow" />
-            {/* ❌ Removed gradient / bg color — made it clean text */}
-            <h1 className="text-4xl font-bold">EcoTrack</h1>
+            <h1 className="text-4xl font-bold eco-gradient bg-clip-text text-transparent">
+              EcoTrack
+            </h1>
           </div>
-          <p className="text-muted-foreground">
-            Track your carbon footprint, save the planet 
-          </p>
+          <p className="text-muted-foreground">Track your carbon footprint, save the planet 🌍</p>
         </div>
 
-        {/* Tabs for login/signup */}
         <Tabs defaultValue="login" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-4">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
 
-          {/* Login Tab */}
           <TabsContent value="login">
-            {/* ❌ Removed shadow + simplified background */}
-            <Card className="border border-border bg-transparent text-card-foreground transition-colors duration-300">
+            <Card className="shadow-eco-lg">
               <CardHeader>
                 <CardTitle>Welcome Back</CardTitle>
-                <CardDescription>
-                  Enter your credentials to continue
-                </CardDescription>
+                <CardDescription>Enter your credentials to continue</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleLogin} className="space-y-4">
@@ -103,19 +90,18 @@ const Login = () => {
                   <Button type="submit" className="w-full eco-gradient">
                     Login
                   </Button>
+                  <p className="text-xs text-center text-muted-foreground">
+                  </p>
                 </form>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Signup Tab */}
           <TabsContent value="signup">
-            <Card className="border border-border bg-transparent text-card-foreground transition-colors duration-300">
+            <Card className="shadow-eco-lg">
               <CardHeader>
                 <CardTitle>Create Account</CardTitle>
-                <CardDescription>
-                  Join the eco-friendly community
-                </CardDescription>
+                <CardDescription>Join the eco-friendly community</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSignup} className="space-y-4">

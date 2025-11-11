@@ -1,11 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack</title>
-   
+    <link rel="icon" type="image/png" href="/favicon.png" />
 
+    <!-- ✅ Prevent theme flicker before React loads -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem("ecotrack-theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = savedTheme || (prefersDark ? "dark" : "light");
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        document.body.classList.add("bg-background", "text-foreground");
+      })();
+    </script>
   </head>
 
   <body>
