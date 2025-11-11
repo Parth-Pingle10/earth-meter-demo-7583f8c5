@@ -26,7 +26,7 @@ const Dashboard = () => {
       <main className="container py-8 animate-fade-in">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">
-            Welcome back, {mockUser.name.split(' ')[0]} 🌿
+            Welcome back, {mockUser.name.split(' ')[0]} 
           </h1>
           <p className="text-muted-foreground">Here's your carbon footprint overview</p>
         </div>
@@ -112,11 +112,11 @@ const Dashboard = () => {
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">
-                        {activity.type === "Car Travel" && "🚗"}
-                        {activity.type === "Electricity Usage" && "⚡"}
-                        {activity.type === "Food Consumption" && "🍔"}
-                        {activity.type === "Flight Travel" && "✈️"}
-                        {activity.type === "Bike/Walk" && "🚲"}
+                        {activity.type === "Car Travel" && ""}
+                        {activity.type === "Electricity Usage" && ""}
+                        {activity.type === "Food Consumption" && ""}
+                        {activity.type === "Flight Travel" && ""}
+                        {activity.type === "Bike/Walk" && ""}
                       </span>
                       <div>
                         <p className="font-medium">{activity.type}</p>
