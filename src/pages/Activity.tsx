@@ -32,7 +32,7 @@ const Activity = () => {
     if (selectedActivity === "car") {
       const dist = parseFloat(distance);
       const mil = parseFloat(mileage);
-      
+
       if (!dist || !mil) {
         toast.error("Please enter distance and mileage");
         return;
@@ -43,7 +43,7 @@ const Activity = () => {
       activityType = "Car Travel";
     } else if (selectedActivity === "electricity") {
       const kWh = parseFloat(electricity);
-      
+
       if (!kWh) {
         toast.error("Please enter electricity consumed");
         return;
@@ -61,7 +61,7 @@ const Activity = () => {
       activityType = "Food Consumption";
     } else if (selectedActivity === "flight") {
       const dist = parseFloat(flightDistance);
-      
+
       if (!dist) {
         toast.error("Please enter flight distance");
         return;
@@ -98,10 +98,9 @@ const Activity = () => {
 
     activities.push(newActivity);
     localStorage.setItem("ecotrack-activities", JSON.stringify(activities));
-    
+
     toast.success("Activity added to dashboard!");
-    
-    // Reset form
+
     setSelectedActivity("");
     setDistance("");
     setMileage("");
@@ -167,7 +166,7 @@ const Activity = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label>Fuel Type</Label>
                   <Select value={fuelType} onValueChange={setFuelType}>
@@ -234,7 +233,7 @@ const Activity = () => {
             {selectedActivity === "bike" && (
               <div className="p-4 bg-success/10 rounded-lg text-center animate-fade-in">
                 <p className="text-success font-medium">
-                  🎉 Excellent choice! Walking and cycling produce zero emissions.
+                  Excellent choice! Walking and cycling produce zero emissions.
                 </p>
               </div>
             )}

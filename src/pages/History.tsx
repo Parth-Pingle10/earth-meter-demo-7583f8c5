@@ -150,18 +150,7 @@ const History = () => {
                         <TableCell className="font-medium">
                           {formatDateTime(activity.timestamp, activity.date)}
                         </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">
-                              {activity.type === "Car Travel" && "🚗"}
-                              {activity.type === "Electricity Usage" && "⚡"}
-                              {activity.type === "Food Consumption" && "🍔"}
-                              {activity.type === "Flight Travel" && "✈️"}
-                              {activity.type === "Bike/Walk" && "🚲"}
-                            </span>
-                            <span>{activity.type}</span>
-                          </div>
-                        </TableCell>
+                        <TableCell>{activity.type}</TableCell>
                         <TableCell className="text-muted-foreground">
                           {activity.type === "Car Travel" && `${activity.distance} km, ${activity.mileage} km/l, ${activity.fuel}`}
                           {activity.type === "Electricity Usage" && `${activity.units} kWh`}

@@ -12,7 +12,7 @@ const Recommendations = () => {
   const generateNewTips = () => {
     const shuffled = [...recommendations].sort(() => Math.random() - 0.5);
     setRecommendations(shuffled);
-    toast.success("New recommendations generated! 💡");
+    toast.success("New recommendations generated!");
   };
 
   return (
@@ -40,11 +40,10 @@ const Recommendations = () => {
             >
               <CardHeader>
                 <CardTitle className="flex items-start gap-3">
-                  <span className="text-3xl">{rec.icon}</span>
                   <div className="flex-1">
                     <Lightbulb className="h-5 w-5 text-primary mb-2" />
                     <p className="text-base font-normal leading-relaxed">
-                      {rec.text.replace(rec.icon, '').trim()}
+                      {rec.text}
                     </p>
                   </div>
                 </CardTitle>

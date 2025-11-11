@@ -43,11 +43,11 @@ const Goals = () => {
     setNewGoalName("");
     setNewGoalTarget("");
     setOpen(false);
-    toast.success("Goal created successfully! 🎯");
+    toast.success("Goal created successfully!");
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background select-none">
       <Navbar />
       <main className="container py-8 animate-fade-in max-w-4xl">
         <div className="flex items-center justify-between mb-8">
@@ -161,13 +161,6 @@ const Goals = () => {
                         <TableCell className="font-medium">{activity.date}</TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <span className="text-lg">
-                              {activity.type === "Car Travel" && "🚗"}
-                              {activity.type === "Electricity Usage" && "⚡"}
-                              {activity.type === "Food Consumption" && "🍔"}
-                              {activity.type === "Flight Travel" && "✈️"}
-                              {activity.type === "Bike/Walk" && "🚲"}
-                            </span>
                             <span>{activity.type}</span>
                           </div>
                         </TableCell>

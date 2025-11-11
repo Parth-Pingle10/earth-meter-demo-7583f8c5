@@ -50,7 +50,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background select-none">
       <Navbar />
       <main className="container py-8 animate-fade-in max-w-4xl">
         <div className="mb-6">
