@@ -12,7 +12,7 @@ const Recommendations = () => {
   const generateNewTips = () => {
     const shuffled = [...recommendations].sort(() => Math.random() - 0.5);
     setRecommendations(shuffled);
-    toast.success("New recommendations generated! 💡");
+    toast.success("New recommendations generated! ");
   };
 
   return (

@@ -46,3 +46,9 @@
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* Old IE */
 }
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
