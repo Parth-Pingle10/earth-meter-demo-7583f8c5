@@ -12,5 +12,8 @@ if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
   document.documentElement.classList.remove("dark");
 }
 
+// ✅ Ensure body uses Tailwind background + text colors
+document.body.classList.add("bg-background", "text-foreground");
+
 // Render the app
 createRoot(document.getElementById("root")!).render(<App />);
