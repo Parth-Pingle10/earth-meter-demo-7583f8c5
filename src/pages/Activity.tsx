@@ -72,12 +72,12 @@ const Activity = () => {
     } else if (selectedActivity === "bike") {
       emission = 0;
       activityType = "Bike/Walk";
-      toast.success("Great choice! Zero emissions! 🌿");
+      toast.success("Great choice! Zero emissions!");
     }
 
     setCalculatedEmission(emission);
     setCurrentActivityType(activityType);
-    toast.success("Emission calculated successfully! 🌿");
+    toast.success("Emission calculated successfully!");
   };
 
   const addToDashboard = () => {
@@ -99,7 +99,7 @@ const Activity = () => {
     activities.push(newActivity);
     localStorage.setItem("ecotrack-activities", JSON.stringify(activities));
     
-    toast.success("Activity added to dashboard! 🎉");
+    toast.success("Activity added to dashboard!");
     
     // Reset form
     setSelectedActivity("");

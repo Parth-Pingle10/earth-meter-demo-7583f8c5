@@ -20,10 +20,10 @@ const Login = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (loginEmail === mockUser.email && loginPassword === mockUser.password) {
-      toast.success("Welcome back to EcoTrack! 🌿");
+      toast.success("Welcome back to EcoTrack!");
       navigate("/dashboard");
     } else {
-      toast.error("Invalid credentials. Try demo@ecotrack.com / 12345");
+      toast.error("Invalid credentials.");
     }
   };
 
@@ -70,7 +70,7 @@ const Login = () => {
                     <Input
                       id="login-email"
                       type="email"
-                      placeholder="demo@ecotrack.com"
+                      placeholder="Enter your Email"
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       required
@@ -81,7 +81,7 @@ const Login = () => {
                     <Input
                       id="login-password"
                       type="password"
-                      placeholder="12345"
+                      placeholder="Enter your Password"
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       required
@@ -91,7 +91,6 @@ const Login = () => {
                     Login
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
-                    Demo: demo@ecotrack.com / 12345
                   </p>
                 </form>
               </CardContent>
@@ -127,7 +126,7 @@ const Login = () => {
                       onChange={(e) => setSignupEmail(e.target.value)}
                       required
                     />
-                  </div>
+                  </div>  
                   <div className="space-y-2">
                     <Label htmlFor="signup-password">Password</Label>
                     <Input
