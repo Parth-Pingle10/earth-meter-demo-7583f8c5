@@ -53,7 +53,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 mb-8">
-          <Card className="shadow-eco transition-smooth">
+          <Card className="transition-smooth">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Plus className="h-5 w-5 text-primary" />
@@ -76,7 +76,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-eco transition-smooth">
+          <Card className="transition-smooth">
             <CardHeader>
               <CardTitle>Latest Recommendation</CardTitle>
             </CardHeader>
@@ -94,7 +94,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        <Card className="shadow-eco">
+        <Card>
           <CardHeader>
             <CardTitle>Recent Activities</CardTitle>
           </CardHeader>

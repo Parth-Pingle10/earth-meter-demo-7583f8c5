@@ -119,7 +119,7 @@ const Activity = () => {
           <p className="text-muted-foreground">Track your carbon emissions from daily activities</p>
         </div>
 
-        <Card className="shadow-eco-lg mb-6">
+        <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calculator className="h-5 w-5 text-primary" />
@@ -251,7 +251,7 @@ const Activity = () => {
         </Card>
 
         {calculatedEmission !== null && (
-          <Card className="shadow-eco-lg animate-scale-in eco-gradient">
+          <Card className="animate-scale-in eco-gradient">
             <CardContent className="pt-6">
               <div className="text-center">
                 <Sparkles className="h-12 w-12 mx-auto mb-4 text-white animate-glow" />

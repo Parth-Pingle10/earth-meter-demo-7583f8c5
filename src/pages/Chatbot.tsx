@@ -58,7 +58,7 @@ const Chatbot = () => {
           <p className="text-muted-foreground">Ask me anything about reducing your carbon footprint</p>
         </div>
 
-        <Card className="shadow-eco-lg h-[600px] flex flex-col">
+        <Card className="h-[600px] flex flex-col">
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-2">
               <Bot className="h-5 w-5 text-primary animate-glow" />

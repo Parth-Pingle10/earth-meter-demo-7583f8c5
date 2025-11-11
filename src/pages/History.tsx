@@ -77,7 +77,7 @@ const History = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3 mb-8">
-          <Card className="shadow-eco">
+          <Card>
             <CardContent className="pt-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-1">Total Activities</p>
@@ -85,7 +85,7 @@ const History = () => {
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-eco">
+          <Card>
             <CardContent className="pt-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-1">Total Emissions</p>
@@ -94,7 +94,7 @@ const History = () => {
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-eco">
+          <Card>
             <CardContent className="pt-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-1">Average per Activity</p>
@@ -107,7 +107,7 @@ const History = () => {
           </Card>
         </div>
 
-        <Card className="shadow-eco-lg">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <HistoryIcon className="h-5 w-5 text-primary" />

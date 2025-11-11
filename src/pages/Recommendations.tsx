@@ -35,7 +35,7 @@ const Recommendations = () => {
           {recommendations.map((rec, index) => (
             <Card 
               key={rec.id} 
-              className="shadow-eco transition-smooth animate-fade-in"
+              className="transition-smooth animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader>

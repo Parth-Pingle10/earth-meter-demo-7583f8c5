@@ -11,7 +11,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, icon, subtitle, trend }: StatCardProps) => {
   return (
-    <Card className="hover:shadow-eco transition-smooth animate-fade-in">
+    <Card className="transition-smooth animate-fade-in">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}

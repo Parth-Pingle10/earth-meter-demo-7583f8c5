@@ -18,7 +18,7 @@ const Rewards = () => {
           {mockRewards.map((reward, index) => (
             <Card 
               key={reward.id} 
-              className={`shadow-eco transition-smooth animate-fade-in ${
+              className={`transition-smooth animate-fade-in ${
                 reward.unlocked ? 'bg-card' : 'bg-muted/50'
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}
@@ -54,7 +54,7 @@ const Rewards = () => {
           ))}
         </div>
 
-        <Card className="mt-8 shadow-eco-lg eco-gradient">
+        <Card className="mt-8 eco-gradient">
           <CardContent className="pt-6">
             <div className="text-center text-white">
               <Trophy className="h-16 w-16 mx-auto mb-4 animate-glow" />

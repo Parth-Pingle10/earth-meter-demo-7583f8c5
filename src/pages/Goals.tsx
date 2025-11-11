@@ -100,7 +100,7 @@ const Goals = () => {
             const progressPercent = (goal.progress / goal.targetValue) * 100;
             
             return (
-              <Card key={goal.id} className="shadow-eco transition-smooth">
+              <Card key={goal.id} className="transition-smooth">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -132,7 +132,7 @@ const Goals = () => {
           })}
         </div>
 
-        <Card className="shadow-eco mt-8">
+        <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <History className="h-5 w-5 text-primary" />
