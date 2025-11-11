@@ -49,10 +49,9 @@ const Login = () => {
       <div className="w-full max-w-md animate-scale-in">
         {/* Logo + Title */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Leaf className="h-12 w-12 text-primary animate-glow" />
-            {/* ❌ Removed gradient / bg color — made it clean text */}
-            <h1 className="text-4xl font-bold">EcoTrack</h1>
+            <div className="flex items-center justify-center gap-2 mb-4">
+            <img src="/logo.ico" alt="EcoTrack Logo" className="h-12 w-12" />
+            <h1 className="text-4xl font-bold text-primary">EcoTrack</h1>
           </div>
           <p className="text-muted-foreground">
             Track your carbon footprint, save the planet 
