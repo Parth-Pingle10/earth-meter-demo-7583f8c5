@@ -7,9 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { mockGoals } from "@/lib/mockData";
 import { Target, Plus, TrendingUp, History } from "lucide-react";
 import { toast } from "sonner";
+import axios from "axios"; // ✅ added axios
+import { mockGoals } from "@/lib/mockData";
 
 const Goals = () => {
   const [goals, setGoals] = useState(mockGoals);
@@ -18,14 +19,30 @@ const Goals = () => {
   const [open, setOpen] = useState(false);
   const [activities, setActivities] = useState<any[]>([]);
 
+  const API_BASE_URL = "http://localhost:5000/api"; // ✅ backend URL
+
+  // ✅ Fetch goals and activities from backend
   useEffect(() => {
-    const stored = localStorage.getItem("ecotrack-activities");
-    if (stored) {
-      setActivities(JSON.parse(stored));
-    }
+    const fetchData = async () => {
+      try {
+        const [goalsRes, activitiesRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}/goals`),
+          axios.get(`${API_BASE_URL}/activities/history`)
+        ]);
+        setGoals(goalsRes.data || []);
+        setActivities(activitiesRes.data || []);
+      } catch (err) {
+        console.warn("Backend fetch failed, using local mock data:", err);
+        const stored = localStorage.getItem("ecotrack-activities");
+        if (stored) setActivities(JSON.parse(stored));
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleCreateGoal = () => {
+  // ✅ Add new goal to backend
+  const handleCreateGoal = async () => {
     if (!newGoalName || !newGoalTarget) {
       toast.error("Please fill all fields");
       return;
@@ -39,11 +56,17 @@ const Goals = () => {
       status: "Active" as const
     };
 
-    setGoals([...goals, newGoal]);
-    setNewGoalName("");
-    setNewGoalTarget("");
-    setOpen(false);
-    toast.success("Goal created successfully! 🎯");
+    try {
+      await axios.post(`${API_BASE_URL}/goals/add`, newGoal);
+      toast.success("Goal created successfully! 🎯");
+      setGoals((prev) => [...prev, newGoal]);
+      setNewGoalName("");
+      setNewGoalTarget("");
+      setOpen(false);
+    } catch (err) {
+      console.error("Error creating goal:", err);
+      toast.error("Failed to save goal!");
+    }
   };
 
   return (
@@ -55,7 +78,7 @@ const Goals = () => {
             <h1 className="text-3xl font-bold mb-2">Your Goals</h1>
             <p className="text-muted-foreground">Track your eco-friendly targets</p>
           </div>
-          
+
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button className="eco-gradient">
@@ -98,7 +121,7 @@ const Goals = () => {
         <div className="grid gap-6">
           {goals.map((goal) => {
             const progressPercent = (goal.progress / goal.targetValue) * 100;
-            
+
             return (
               <Card key={goal.id} className="transition-smooth">
                 <CardHeader>
@@ -179,7 +202,7 @@ const Goals = () => {
                           {activity.type === "Bike/Walk" && "Eco-friendly transport"}
                         </TableCell>
                         <TableCell className="text-right font-bold text-primary">
-                          {activity.emission.toFixed(2)}
+                          {activity.emission?.toFixed(2)}
                         </TableCell>
                       </TableRow>
                     ))}

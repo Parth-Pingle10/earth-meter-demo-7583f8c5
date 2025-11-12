@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { History as HistoryIcon } from "lucide-react";
+import axios from "axios"; // ✅ Added axios for backend calls
+import { toast } from "sonner"; // optional toast alerts
 
 interface Activity {
   id: number;
@@ -22,27 +24,34 @@ const History = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [timeFilter, setTimeFilter] = useState("all");
 
+  const API_BASE_URL = "http://localhost:5000/api"; // ✅ your backend base URL
+
   useEffect(() => {
-    const stored = localStorage.getItem("ecotrack-activities");
-    if (stored) {
-      setActivities(JSON.parse(stored));
-    }
+    const fetchActivities = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/activities/history`);
+        setActivities(res.data || []);
+        toast.success("Fetched activities from backend ✅");
+      } catch (err) {
+        console.warn("Backend fetch failed, loading local data:", err);
+        const stored = localStorage.getItem("ecotrack-activities");
+        if (stored) setActivities(JSON.parse(stored));
+      }
+    };
+    fetchActivities();
   }, []);
 
   const getFilteredActivities = () => {
     const now = new Date();
-    
     return activities.filter((activity) => {
       if (timeFilter === "all") return true;
-      
       const activityDate = new Date(activity.timestamp || activity.date);
       const diffTime = Math.abs(now.getTime() - activityDate.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
+
       if (timeFilter === "1day") return diffDays <= 1;
       if (timeFilter === "7days") return diffDays <= 7;
       if (timeFilter === "30days") return diffDays <= 30;
-      
       return true;
     });
   };
@@ -56,12 +65,12 @@ const History = () => {
   const formatDateTime = (timestamp: string, date: string) => {
     if (timestamp) {
       const dt = new Date(timestamp);
-      return dt.toLocaleString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      return dt.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     }
     return date;
@@ -99,7 +108,9 @@ const History = () => {
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-1">Average per Activity</p>
                 <p className="text-3xl font-bold text-primary">
-                  {filteredActivities.length > 0 ? (getTotalEmissions() / filteredActivities.length).toFixed(2) : "0.00"}
+                  {filteredActivities.length > 0
+                    ? (getTotalEmissions() / filteredActivities.length).toFixed(2)
+                    : "0.00"}
                 </p>
                 <p className="text-xs text-muted-foreground">kg CO₂</p>
               </div>
@@ -128,8 +139,8 @@ const History = () => {
               <div className="text-center py-12">
                 <HistoryIcon className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
                 <p className="text-muted-foreground">
-                  {timeFilter === "all" 
-                    ? "No activities logged yet. Start tracking to see your history!" 
+                  {timeFilter === "all"
+                    ? "No activities logged yet. Start tracking to see your history!"
                     : `No activities found in the selected time period.`}
                 </p>
               </div>
@@ -163,7 +174,8 @@ const History = () => {
                           </div>
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          {activity.type === "Car Travel" && `${activity.distance} km, ${activity.mileage} km/l, ${activity.fuel}`}
+                          {activity.type === "Car Travel" &&
+                            `${activity.distance} km, ${activity.mileage} km/l, ${activity.fuel}`}
                           {activity.type === "Electricity Usage" && `${activity.units} kWh`}
                           {activity.type === "Food Consumption" && activity.dietType}
                           {activity.type === "Flight Travel" && `${activity.distance} km`}

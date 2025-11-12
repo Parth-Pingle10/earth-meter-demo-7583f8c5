@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { activityTypes, emissionFactors } from "@/lib/mockData";
 import { Calculator, Sparkles, Plus } from "lucide-react";
 import { toast } from "sonner";
+import axios from "axios"; // ✅ added for backend calls
 
 const Activity = () => {
   const [selectedActivity, setSelectedActivity] = useState("");
@@ -19,6 +20,8 @@ const Activity = () => {
   const [flightDistance, setFlightDistance] = useState("");
   const [calculatedEmission, setCalculatedEmission] = useState<number | null>(null);
   const [currentActivityType, setCurrentActivityType] = useState("");
+
+  const API_BASE_URL = "http://localhost:5000/api"; // ✅ your backend base URL
 
   const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>, setter: (value: string) => void) => {
     const value = e.target.value;
@@ -75,12 +78,10 @@ const Activity = () => {
     toast.success("Emission calculated successfully!");
   };
 
-  const addToDashboard = () => {
+  const addToDashboard = async () => {
     if (calculatedEmission === null) return;
 
-    const activities = JSON.parse(localStorage.getItem("ecotrack-activities") || "[]");
     const newActivity = {
-      id: Date.now(),
       type: currentActivityType,
       emission: calculatedEmission,
       date: new Date().toISOString().split("T")[0],
@@ -88,14 +89,19 @@ const Activity = () => {
       ...(selectedActivity === "car" && { distance, mileage, fuel: fuelType }),
       ...(selectedActivity === "electricity" && { units: electricity }),
       ...(selectedActivity === "food" && { dietType }),
-      ...(selectedActivity === "flight" && { distance: flightDistance })
+      ...(selectedActivity === "flight" && { distance: flightDistance }),
     };
 
-    activities.push(newActivity);
-    localStorage.setItem("ecotrack-activities", JSON.stringify(activities));
+    try {
+      // ✅ send to backend
+      await axios.post(`${API_BASE_URL}/activities/add`, newActivity);
+      toast.success("Activity saved to backend!");
+    } catch (error) {
+      console.error("Error saving activity:", error);
+      toast.error("Failed to save activity!");
+    }
 
-    toast.success("Activity added to dashboard!");
-
+    // Reset
     setSelectedActivity("");
     setDistance("");
     setMileage("");
@@ -149,7 +155,6 @@ const Activity = () => {
                       placeholder="e.g., 20"
                       value={distance}
                       onChange={(e) => handleNumberInput(e, setDistance)}
-                      className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                   </div>
                   <div className="space-y-2">
@@ -161,7 +166,6 @@ const Activity = () => {
                       placeholder="e.g., 15"
                       value={mileage}
                       onChange={(e) => handleNumberInput(e, setMileage)}
-                      className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                   </div>
                 </div>
@@ -192,7 +196,6 @@ const Activity = () => {
                     placeholder="e.g., 50"
                     value={electricity}
                     onChange={(e) => handleNumberInput(e, setElectricity)}
-                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -227,7 +230,6 @@ const Activity = () => {
                     placeholder="e.g., 1500"
                     value={flightDistance}
                     onChange={(e) => handleNumberInput(e, setFlightDistance)}
-                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </div>
               </div>

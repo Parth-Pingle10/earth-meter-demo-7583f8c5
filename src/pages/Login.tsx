@@ -11,9 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Leaf } from "lucide-react";
 import { toast } from "sonner";
-import { mockUser } from "@/lib/mockData";
+
+// 🌍 Backend API Base URL
+const API_BASE_URL = "http://localhost:5000/api"; // change if deployed
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,24 +24,49 @@ const Login = () => {
   const [signupPassword, setSignupPassword] = useState("");
   const [signupName, setSignupName] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  // 🔐 LOGIN HANDLER — connects to backend
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginEmail === mockUser.email && loginPassword === mockUser.password) {
-      toast.success("Welcome back to EcoTrack!");
+    try {
+      const res = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      });
+
+      if (!res.ok) throw new Error("Invalid credentials");
+
+      const data = await res.json();
+      toast.success(`Welcome back, ${data.name || "EcoUser"}!`);
+      localStorage.setItem("user", JSON.stringify(data));
       navigate("/dashboard");
-    } else {
-      toast.error("Invalid credentials.");
+    } catch (err) {
+      toast.error("Login failed. Please check your email or password.");
     }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  // 🧾 SIGNUP HANDLER — connects to backend
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (signupEmail && signupPassword && signupName) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: signupName,
+          email: signupEmail,
+          password: signupPassword,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Signup failed");
+
+      const data = await res.json();
       toast.success("Registered successfully! Please login.");
       setLoginEmail(signupEmail);
       setLoginPassword(signupPassword);
-    } else {
-      toast.error("Please fill all fields");
+    } catch (err) {
+      toast.error("Signup failed. Try again later.");
     }
   };
 
@@ -49,12 +75,12 @@ const Login = () => {
       <div className="w-full max-w-md animate-scale-in">
         {/* Logo + Title */}
         <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
+          <div className="flex items-center justify-center gap-2 mb-4">
             <img src="/logo.ico" alt="EcoTrack Logo" className="h-12 w-12" />
             <h1 className="text-4xl font-bold text-primary">EcoTrack</h1>
           </div>
           <p className="text-muted-foreground">
-            Track your carbon footprint, save the planet 
+            Track your carbon footprint, save the planet
           </p>
         </div>
 
@@ -65,9 +91,8 @@ const Login = () => {
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
 
-          {/* Login Tab */}
+          {/* LOGIN TAB */}
           <TabsContent value="login">
-            {/* ❌ Removed shadow + simplified background */}
             <Card className="border border-border bg-transparent text-card-foreground transition-colors duration-300">
               <CardHeader>
                 <CardTitle>Welcome Back</CardTitle>
@@ -107,7 +132,7 @@ const Login = () => {
             </Card>
           </TabsContent>
 
-          {/* Signup Tab */}
+          {/* SIGNUP TAB */}
           <TabsContent value="signup">
             <Card className="border border-border bg-transparent text-card-foreground transition-colors duration-300">
               <CardHeader>
